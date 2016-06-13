@@ -1,0 +1,29 @@
+<?php
+// Some code to generate a random movie title displayed on a page, new title on refesh.
+
+// mysql_connect("server", "user_name", "password")
+$connection = @mysql_connect("localhost", "database_name", "db_password")
+or die(mysql_error());
+// use @ to suppress nasty error message when connection
+// fails ? die() still produces meaningful message
+
+	$db_name = "TEST_NAME";
+	mysql_select_db($db_name, $connection);
+	
+	//not actually random but closest I could get. Random seed at least.
+	$select_statement = "SELECT TitleWord FROM MovieTitleWords ORDER BY RAND( ) LIMIT 0 , 6 ";
+	$results = mysql_query($select_statement);
+	while ($event = mysql_fetch_array($results)) {
+		$msg .= " " . $event["TitleWord"];
+	}
+	
+
+      // Free resources
+      mysql_free_result($results);
+
+//print title   
+	 echo "<h1>$msg</h1>"; 
+
+
+?>
+     <p>Refresh the page to generate a new title</p>
